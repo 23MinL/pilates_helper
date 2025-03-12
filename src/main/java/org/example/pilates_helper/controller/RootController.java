@@ -37,22 +37,23 @@ public class RootController extends Controller {
             return;
         }
         session.setAttribute("message", null);
-        session.setAttribute("question", question);
+//        session.setAttribute("question", question);
         String basePrompt = togetherService.useBaseModel(question);
-        session.setAttribute("answer", basePrompt);
+//        session.setAttribute("answer", basePrompt);
         String deepAnswer = togetherService.useReasoning(basePrompt);
-        System.out.println(deepAnswer);
+//        System.out.println(deepAnswer);
         String[] deepAnswerArr = deepAnswer.trim().split("</think>");
         String thinking = deepAnswerArr[0].split("<think>")[1].trim();
-        session.setAttribute("thinking", thinking);
+//        session.setAttribute("thinking", thinking);
         String reasoning = deepAnswerArr[1].trim();
-        session.setAttribute("reasoning", reasoning);
+//        session.setAttribute("reasoning", reasoning);
         String image = togetherService.useImage(basePrompt);
-        session.setAttribute("image", image);
+//        session.setAttribute("image", image);
         String uuid = UUID.randomUUID().toString();
-        session.setAttribute("uuid", uuid);
+//        session.setAttribute("uuid", uuid);
         supabaseService.save(new LLMResult(
                 uuid, question, basePrompt, thinking, reasoning, image));
-        resp.sendRedirect(req.getContextPath() + "/answer");
+        resp.sendRedirect("%s/answer/%s".formatted(req.getContextPath(), uuid));
+//        resp.sendRedirect(req.getContextPath() + "/answer");
     }
 }
