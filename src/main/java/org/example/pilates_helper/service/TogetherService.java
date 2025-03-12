@@ -32,7 +32,7 @@ public class TogetherService {
                 ModelType.REASONING
         ));
 //        System.out.println(responseText);
-        return objectMapper.readValue(responseText, BaseLLMResponse.class).choices().get(0).message().content().split("</think>")[1].trim();
+        return objectMapper.readValue(responseText, BaseLLMResponse.class).choices().get(0).message().content();
     }
 
     public String useImage(String prompt) throws JsonProcessingException {
