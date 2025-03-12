@@ -30,23 +30,17 @@
     <!-- Question Form -->
     <div class="card question-form-card mb-4">
         <h3 class="mb-4 text-center">궁금한 점을 물어보세요</h3>
-        <form id="questionForm">
+        <% if (session.getAttribute("message") != null) { %>
+        <p><%= session.getAttribute("message") %></p>
+        <% } %>
+        <form id="questionForm" method="post">
             <div class="mb-3">
-                <input type="text" class="form-control" id="questionInput" placeholder="예: 허리 통증에 좋은 필라테스 동작은 무엇인가요?">
+                <input type="text" name="question" class="form-control" id="questionInput" placeholder="예: 허리 통증에 좋은 필라테스 동작은 무엇인가요?" required>
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-gradient">질문하기</button>
             </div>
         </form>
-    </div>
-
-    <!-- Response Card (hidden initially) -->
-    <div class="card response-card" id="responseCard">
-        <h4 class="mb-3">AI 필라테스 코치 답변:</h4>
-        <div id="responseText" class="mb-4"></div>
-        <div class="text-center mt-4">
-            <button id="newQuestionBtn" class="btn btn-outline-primary">새로운 질문하기</button>
-        </div>
     </div>
 
     <!-- Features Section -->
@@ -121,42 +115,6 @@
         "필라테스를 처음 시작하시는 분들에게는 기본적인 호흡법과 코어 활성화부터 배우는 것이 중요합니다. '백그라운드 브리딩'과 '임프린트'같은 기초 동작으로 시작하여 점진적으로 난이도를 높여가는 것이 좋습니다. 주 2-3회, 30분씩 연습하면서 몸의 변화를 느껴보세요.",
         "목과 어깨 긴장 완화를 위한 필라테스 동작으로는 넥 롤(Neck Roll), 숄더 브릿지(Shoulder Bridge), 체스트 오프너(Chest Opener)가 효과적입니다. 이 동작들은 상체의 긴장을 풀고 혈액 순환을 개선하는 데 도움이 됩니다. 특히 컴퓨터 작업을 많이 하시는 분들에게 추천합니다."
     ];
-
-    // Form submit event
-    document.getElementById('questionForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const questionInput = document.getElementById('questionInput');
-        const responseCard = document.getElementById('responseCard');
-        const responseText = document.getElementById('responseText');
-
-        if (questionInput.value.trim() !== '') {
-            // Show loading state
-            responseText.innerHTML = '<div class="d-flex justify-content-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
-            responseCard.classList.add('show');
-
-            // Simulate API call delay
-            setTimeout(() => {
-                // Get random response for demo
-                const randomResponse = sampleResponses[Math.floor(Math.random() * sampleResponses.length)];
-
-                // Display response with typing effect
-                typeWriter(responseText, randomResponse, 0, 20);
-            }, 1500);
-        }
-    });
-
-    // New question button
-    document.getElementById('newQuestionBtn').addEventListener('click', function() {
-        const responseCard = document.getElementById('responseCard');
-        const questionInput = document.getElementById('questionInput');
-
-        responseCard.classList.remove('show');
-        setTimeout(() => {
-            questionInput.value = '';
-            questionInput.focus();
-        }, 500);
-    });
 
     // Typing effect function
     function typeWriter(element, text, i, speed) {
