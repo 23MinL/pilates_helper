@@ -1,17 +1,22 @@
 package org.example.pilates_helper.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.example.pilates_helper.model.dto.LLMResult;
+import org.example.pilates_helper.service.SupabaseService;
 import org.example.pilates_helper.service.TogetherService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet ("/")
 public class RootController extends Controller {
     final static TogetherService togetherService = TogetherService.getInstance();
+    final static SupabaseService supabaseService = SupabaseService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -36,11 +41,18 @@ public class RootController extends Controller {
         String basePrompt = togetherService.useBaseModel(question);
         session.setAttribute("answer", basePrompt);
         String deepAnswer = togetherService.useReasoning(basePrompt);
+        System.out.println(deepAnswer);
         String[] deepAnswerArr = deepAnswer.trim().split("</think>");
-        session.setAttribute("thinking", deepAnswerArr[0].split("<think>")[1].trim());
-        session.setAttribute("reasoning", deepAnswerArr[1].trim());
+        String thinking = deepAnswerArr[0].split("<think>")[1].trim();
+        session.setAttribute("thinking", thinking);
+        String reasoning = deepAnswerArr[1].trim();
+        session.setAttribute("reasoning", reasoning);
         String image = togetherService.useImage(basePrompt);
         session.setAttribute("image", image);
+        String uuid = UUID.randomUUID().toString();
+        session.setAttribute("uuid", uuid);
+        supabaseService.save(new LLMResult(
+                uuid, question, basePrompt, thinking, reasoning, image));
         resp.sendRedirect(req.getContextPath() + "/answer");
     }
 }

@@ -74,7 +74,7 @@
         // Create a temporary input element
         const tempInput = document.createElement("input");
         // Set its value to the current URL
-        tempInput.value = window.location.href;
+        tempInput.value = window.location.href + "/<%= session.getAttribute("uuid") %>";
         // Append it to the body
         document.body.appendChild(tempInput);
         // Select all the text
