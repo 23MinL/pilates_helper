@@ -19,7 +19,7 @@ public class SupabaseService {
         System.out.println(response);
     }
 
-    public void read(String uuid) {
-        r
-    }
+//    public void findByUUID(String uuid) {
+//
+//    }
 }
