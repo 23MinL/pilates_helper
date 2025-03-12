@@ -23,7 +23,7 @@ public class RootController extends Controller {
         String question = req.getParameter("question");
         HttpSession session = req.getSession();
         if (question == null || question.isEmpty()) {
-            session.setAttribute("message", "Please enter a question.");
+            session.setAttribute("message", "질문이 비어 있습니다!");
             view(req, resp, "index");
         }
         session.setAttribute("message", null);
