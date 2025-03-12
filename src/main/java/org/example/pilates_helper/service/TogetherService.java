@@ -26,7 +26,13 @@ public class TogetherService {
     }
 
     public String useReasoning(String prompt) throws JsonProcessingException {
-        return repository.callAPI(new TogetherAPIParam(prompt, ModelType.REASONING));
+        String promptPreProcessing = "you are pilates expert. more specific idea and concept explanation. max length 1000 character. %s. use plain text. no markdown. use only korean language.".formatted(prompt);
+        String responseText = repository.callAPI(new TogetherAPIParam(
+                promptPreProcessing,
+                ModelType.REASONING
+        ));
+//        System.out.println(responseText);
+        return objectMapper.readValue(responseText, BaseLLMResponse.class).choices().get(0).message().content().split("</think>")[1].trim();
     }
 
     public String useImage(String prompt) throws JsonProcessingException {

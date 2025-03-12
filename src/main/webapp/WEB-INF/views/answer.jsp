@@ -15,6 +15,7 @@
     <% if (session.getAttribute("answer") != null) { %>
         <p><%= session.getAttribute("question")%> </p>
         <p><%= session.getAttribute("answer")%> </p>
+        <p><%= session.getAttribute("reasoning")%> </p>
     <% } %>
 </body>
 </html>

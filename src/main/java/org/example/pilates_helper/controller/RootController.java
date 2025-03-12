@@ -35,6 +35,8 @@ public class RootController extends Controller {
         session.setAttribute("question", question);
         String basePrompt = togetherService.useBaseModel(question);
         session.setAttribute("answer", basePrompt);
+        String deepAnswer = togetherService.useReasoning(basePrompt);
+        session.setAttribute("reasoning", deepAnswer);
         resp.sendRedirect(req.getContextPath() + "/answer");
     }
 }
