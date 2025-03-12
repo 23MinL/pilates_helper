@@ -13,6 +13,10 @@ public class TogetherService {
         return instance;
     }
 
+    public String useBaseModel(String prompt) {
+        return repository.callAPI(new TogetherAPIParam());
+    }
+
     public String useReasoning(String prompt) {
         return repository.callAPI(new TogetherAPIParam());
     }

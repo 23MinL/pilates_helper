@@ -12,5 +12,9 @@
 </head>
 <body>
     <p>답입니당!</p>
+    <% if (session.getAttribute("answer") != null) { %>
+        <p><%= session.getAttribute("question")%> </p>
+        <p><%= session.getAttribute("answer")%> </p>
+    <% } %>
 </body>
 </html>
