@@ -3,6 +3,7 @@ package org.example.pilates_helper.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.pilates_helper.model.dto.BaseLLMResponse;
+import org.example.pilates_helper.model.dto.ImageLLMResponse;
 import org.example.pilates_helper.model.dto.ModelType;
 import org.example.pilates_helper.model.dto.TogetherAPIParam;
 import org.example.pilates_helper.model.repository.TogetherRepository;
@@ -10,7 +11,7 @@ import org.example.pilates_helper.model.repository.TogetherRepository;
 public class TogetherService {
     private TogetherService() {}
     private static final TogetherService instance = new TogetherService();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final TogetherRepository repository = TogetherRepository.getInstance();
     public static TogetherService getInstance() {
         return instance;
@@ -26,7 +27,7 @@ public class TogetherService {
     }
 
     public String useReasoning(String prompt) throws JsonProcessingException {
-        String promptPreProcessing = "you are pilates expert. more specific idea and concept explanation. max length 1000 character. %s. use plain text. no markdown. use only korean language.".formatted(prompt);
+        String promptPreProcessing = "you are pilates expert. more specific idea and concept explanation. max length 1000 character. %s. use plain text. no markdown. use only korean language. use only korean character.".formatted(prompt);
         String responseText = repository.callAPI(new TogetherAPIParam(
                 promptPreProcessing,
                 ModelType.REASONING
@@ -36,13 +37,13 @@ public class TogetherService {
     }
 
     public String useImage(String prompt) throws JsonProcessingException {
-        String promptPreProcessing = "I need image that explain {%s}. please use webtoon(korean comic) style. cute. not realistic. please remove chinese character or culture things".formatted(prompt);
+        String promptPreProcessing = "I need Just plain Image or plain Picture that explain {%s}. .".formatted(prompt);
         String responseText = repository.callAPI(new TogetherAPIParam(
                 promptPreProcessing,
                 ModelType.IMAGE
         ));
-        return responseText;
+//        return responseText;
 //        System.out.println(responseText);
-//        return objectMapper.readValue(responseText, BaseLLMResponse.class).choices().get(0).message().content();
+        return objectMapper.readValue(responseText, ImageLLMResponse.class).data().get(0).url();
     }
 }

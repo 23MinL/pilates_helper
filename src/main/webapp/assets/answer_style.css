@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'GowunDodum-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    font-family: GowunDodum-Regular, serif;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+.result-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+.result-header {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+.result-image {
+    border-radius: 10px;
+    max-width: 100%;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.result-item {
+    margin-bottom: 15px;
+}
+.result-label {
+    font-weight: bold;
+    color: #555;
+}
+.copy-btn {
+    margin-top: 20px;
+}
+.copy-success {
+    display: none;
+    color: green;
+    margin-left: 10px;
+}
