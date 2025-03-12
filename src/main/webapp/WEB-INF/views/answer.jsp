@@ -11,12 +11,16 @@
     <title>Title</title>
 </head>
 <body>
-    <p>답입니당!</p>
+    <p>결과 페이지</p>
     <% if (session.getAttribute("answer") != null) { %>
         <p>question: <%= session.getAttribute("question")%> </p>
         <p>answer: <%= session.getAttribute("answer")%> </p>
         <p>thinking: <%= session.getAttribute("thinking")%> </p>
         <p>reasoning: <%= session.getAttribute("reasoning")%> </p>
+        <div>
+            <%= session.getAttribute("image")%>">
+<%--            <img alt="<%= session.getAttribute("answer")%>" src="<%= session.getAttribute("image")%>">--%>
+        </div>
     <% } %>
 </body>
 </html>

@@ -39,6 +39,8 @@ public class RootController extends Controller {
         String[] deepAnswerArr = deepAnswer.trim().split("</think>");
         session.setAttribute("thinking", deepAnswerArr[0].split("<think>")[1].trim());
         session.setAttribute("reasoning", deepAnswerArr[1].trim());
+        String image = togetherService.useImage(basePrompt);
+        session.setAttribute("image", image);
         resp.sendRedirect(req.getContextPath() + "/answer");
     }
 }

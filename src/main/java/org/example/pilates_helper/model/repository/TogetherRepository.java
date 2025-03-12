@@ -2,10 +2,7 @@ package org.example.pilates_helper.model.repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.pilates_helper.model.dto.APIClientParam;
-import org.example.pilates_helper.model.dto.BaseLLMBody;
-import org.example.pilates_helper.model.dto.ReasoningLLMBody;
-import org.example.pilates_helper.model.dto.TogetherAPIParam;
+import org.example.pilates_helper.model.dto.*;
 import org.example.pilates_helper.util.APIClient;
 
 import java.util.HashMap;
@@ -40,7 +37,12 @@ public class TogetherRepository implements APIClient {
                 url = "https://api.together.xyz/v1/chat/completions";
                 body = objectMapper.writeValueAsString(new ReasoningLLMBody(model, List.of(new ReasoningLLMBody.Message("user", param.prompt())), 4096));
                 break;
-            default:
+            case IMAGE:
+                model = "black-forest-labs/FLUX.1-schnell-Free";
+                url = "https://api.together.xyz/v1/images/generations";
+                body = objectMapper.writeValueAsString(new ImageLLMBody(model, param.prompt(), 1024, 768, 4, 1, "url"));
+                break;
+        default:
                 throw new RuntimeException("Unsupported together model type");
         }
         return APIClient.super.callAPI(new APIClientParam(url, method, body, headers));

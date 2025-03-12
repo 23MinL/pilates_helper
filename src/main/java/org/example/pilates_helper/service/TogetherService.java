@@ -36,6 +36,13 @@ public class TogetherService {
     }
 
     public String useImage(String prompt) throws JsonProcessingException {
-        return repository.callAPI(new TogetherAPIParam(prompt, ModelType.IMAGE));
+        String promptPreProcessing = "I need image that explain {%s}. please use webtoon(korean comic) style. cute. not realistic. please remove chinese character or culture things".formatted(prompt);
+        String responseText = repository.callAPI(new TogetherAPIParam(
+                promptPreProcessing,
+                ModelType.IMAGE
+        ));
+        return responseText;
+//        System.out.println(responseText);
+//        return objectMapper.readValue(responseText, BaseLLMResponse.class).choices().get(0).message().content();
     }
 }
